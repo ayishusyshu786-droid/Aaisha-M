@@ -1,0 +1,36 @@
+// Smooth scroll for navigation links
+document.querySelectorAll('nav ul li a').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetSection = document.querySelector(link.getAttribute('href'));
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// Form submission alert
+const contactForm = document.querySelector('form');
+contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Thank you! Your message has been sent.');
+    contactForm.reset();
+});
+
+// Animate sections when scrolling into view
+const sections = document.querySelectorAll('section');
+const options = {
+    threshold: 0.3
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, options);
+
+sections.forEach(section => {
+    section.classList.add('hidden');
+    observer.observe(section);
+});
